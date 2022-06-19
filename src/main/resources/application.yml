@@ -1,0 +1,54 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: changeme
+
+  jpa:
+    generate-ddl: true
+    open-in-view: 'false'
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: 'true'
+  flyway:
+    enabled: true
+
+  transaction:
+    default-timeout: 10
+
+hibernate:
+  enable_lazy_load_no_trans: 'true'
+
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: ERROR
+    com.bane.clean.architecture.api: DEBUG
+    org.hibernate: ERROR #DEBUG
+
+---
+
+
+### TESTING PROFILE - for test execution on local and higher envs
+spring:
+  config:
+    activate:
+      on-profile: testing
+
+  datasource:
+    # https://stackoverflow.com/questions/38415734/hsql-database-user-lacks-privilege-or-object-not-found-error
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:localhost;DB_CLOSE_ON_EXIT=FALSE
+    username: admin
+    password:
+
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: validate
+        # USE in-memory DB for testing and refer to @@DataJpaTest doc
+        # Spring Boot automatically creates the schema of an embedded DataSource

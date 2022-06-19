@@ -1,0 +1,24 @@
+version: '3'
+services:
+#  api:
+#    build: .
+#    image: api:v1
+#    container_name: api-container
+#    ports:
+#      - "8080:8080"
+  db:
+    image: postgres:14
+    container_name: api-db-container
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=changeme
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    ports:
+      - "5050:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=changeme
